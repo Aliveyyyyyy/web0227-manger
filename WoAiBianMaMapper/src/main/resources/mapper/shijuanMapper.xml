@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zbf.mapper.ShiJuanMapper">
+     <!--新增试卷分类-->
+     <insert id="toaddShiJuan" parameterType="map">
+         insert into lcg_shijuan_fenlei (id,shijuanfenlei,fenleizhuangtai,fenleibeizhu,createtime)
+         values (#{id},#{shijuanfenlei},#{fenleizhuangtai},#{fenleibeizhu},now())
+     </insert>
+    <!--查询试卷分类列表-->
+    <select id="getShiJunFenLeiList" parameterType="page" resultType="map">
+         select lsf.* from  lcg_shijuan_fenlei lsf
+         <where>
+             <if test="params.id!=null and params.id!=''">and lsf.id=#{params.id}</if>
+             <if test="params.shijuanfenlei!=null and params.shijuanfenlei!=''">and lsf.shijuanfenlei=#{params.shijuanfenlei}</if>
+             <if test="params.fenleizhuangtai!=null and params.fenleizhuangtai!=''">and lsf.fenleizhuangtai=#{params.fenleizhuangtai}</if>
+             <if test="params.fenleibeizhu!=null and params.fenleibeizhu!=''">and lsf.fenleibeizhu=#{params.fenleibeizhu}</if>
+
+         </where>
+        order  by lsf.createtime desc
+    </select>
+    <!--修改试卷分类-->
+    <update id="updateShiJuanFenLei" parameterType="map">
+        update lcg_shijuan_fenlei
+        <set>
+            <if test="shijuanfenlei!=null and shijuanfenlei!=''">shijuanfenlei=#{shijuanfenlei},</if>
+            <if test="fenleizhuangtai!=null and fenleizhuangtai!=''">fenleizhuangtai=#{fenleizhuangtai},</if>
+            <if test="fenleibeizhu!=null and fenleibeizhu!=''">fenleibeizhu=#{fenleibeizhu},</if>
+        </set>
+        <where>
+            <if test="id!=null and id!=''">
+                and id=#{id}
+            </if>
+        </where>
+    </update>
+
+</mapper>
